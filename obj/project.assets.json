@@ -7665,11 +7665,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jhect\\Videos\\resicare-backend\\src\\learning-center-webapi\\learning-center-webapi.csproj",
-      "projectName": "learning-center-webapi",
-      "projectPath": "C:\\Users\\jhect\\Videos\\resicare-backend\\src\\learning-center-webapi\\learning-center-webapi.csproj",
+      "projectUniqueName": "C:\\Users\\jhect\\OneDrive\\Documentos\\GitHub\\resicare-backend\\resicare-backend-webapi.csproj",
+      "projectName": "resicare-backend-webapi",
+      "projectPath": "C:\\Users\\jhect\\OneDrive\\Documentos\\GitHub\\resicare-backend\\resicare-backend-webapi.csproj",
       "packagesPath": "C:\\Users\\jhect\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jhect\\Videos\\resicare-backend\\src\\learning-center-webapi\\obj\\",
+      "outputPath": "C:\\Users\\jhect\\OneDrive\\Documentos\\GitHub\\resicare-backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jhect\\AppData\\Roaming\\NuGet\\NuGet.Config"
