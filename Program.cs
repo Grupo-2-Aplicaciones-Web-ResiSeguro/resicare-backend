@@ -47,11 +47,21 @@ builder.Services.AddCors(options =>
         policy.SetIsOriginAllowed(origin =>
             {
                 if (string.IsNullOrWhiteSpace(origin)) return false;
-            
+
                 try
                 {
                     var uri = new Uri(origin);
-                    return uri.Host == "localhost" || uri.Host == "127.0.0.1";
+                    // Permitir localhost para desarrollo
+                    if (uri.Host == "localhost" || uri.Host == "127.0.0.1")
+                        return true;
+
+                    // Permitir dominios de Render, Vercel, Netlify para producción
+                    if (uri.Host.EndsWith(".onrender.com") ||
+                        uri.Host.EndsWith(".vercel.app") ||
+                        uri.Host.EndsWith(".netlify.app"))
+                        return true;
+
+                    return false;
                 }
                 catch
                 {
@@ -112,29 +122,21 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
-// Recrear la base de datos en cada inicio (SOLO EN DESARROLLO)
-if (app.Environment.IsDevelopment())
+// Crear tablas si no existen
+using (var scope = app.Services.CreateScope())
 {
-    using (var scope = app.Services.CreateScope())
-    {
-        var context = scope.ServiceProvider.GetRequiredService<LearningCenterContext>();
-        
-        Console.WriteLine("Eliminando base de datos existente...");
-        context.Database.EnsureDeleted();
-        
-        Console.WriteLine("Creando base de datos...");
-        context.Database.EnsureCreated();
-        
-        Console.WriteLine("Base de datos recreada exitosamente");
-    }
+    var context = scope.ServiceProvider.GetRequiredService<LearningCenterContext>();
+
+    Console.WriteLine("Verificando y creando tablas si no existen...");
+    context.Database.EnsureCreated();
+
+    Console.WriteLine("Base de datos lista");
 }
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// Swagger habilitado en todos los ambientes
+app.UseSwagger();
+app.UseSwaggerUI();
 
 //app.UseHttpsRedirection();
 

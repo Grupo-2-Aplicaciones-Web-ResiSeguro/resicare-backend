@@ -45,8 +45,11 @@ public class LearningCenterContext(DbContextOptions options) : DbContext(options
             entity.Property(t => t.Id).ValueGeneratedOnAdd();
             entity.Property(t => t.CreatedDate)
                 .IsRequired()
-                .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
-            entity.Property(t => t.UpdatedDate).IsRequired(false);
+                .HasColumnType("TIMESTAMP")
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(t => t.UpdatedDate)
+                .IsRequired(false)
+                .HasColumnType("datetime");
     
             entity.Property(t => t.Service).IsRequired().HasMaxLength(50);
             entity.Property(t => t.Date).IsRequired().HasMaxLength(10);
@@ -65,8 +68,11 @@ public class LearningCenterContext(DbContextOptions options) : DbContext(options
             entity.Property(u => u.Id).ValueGeneratedOnAdd();
             entity.Property(u => u.CreatedDate)
                 .IsRequired()
-                .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
-            entity.Property(u => u.UpdatedDate).IsRequired(false);
+                .HasColumnType("TIMESTAMP")
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(u => u.UpdatedDate)
+                .IsRequired(false)
+                .HasColumnType("datetime");
     
             entity.Property(u => u.Name).IsRequired().HasMaxLength(100);
     
@@ -108,8 +114,11 @@ public class LearningCenterContext(DbContextOptions options) : DbContext(options
             entity.Property(r => r.Id).ValueGeneratedOnAdd();
             entity.Property(r => r.CreatedDate)
                 .IsRequired()
-                .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
-            entity.Property(r => r.UpdatedDate).IsRequired(false);
+                .HasColumnType("TIMESTAMP")
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(r => r.UpdatedDate)
+                .IsRequired(false)
+                .HasColumnType("datetime");
     
             entity.Property(r => r.UserId).IsRequired();
     
@@ -163,8 +172,11 @@ public class LearningCenterContext(DbContextOptions options) : DbContext(options
             entity.Property(c => c.Id).ValueGeneratedOnAdd();
             entity.Property(c => c.CreatedDate)
                 .IsRequired()
-                .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
-            entity.Property(c => c.UpdatedDate).IsRequired(false);
+                .HasColumnType("TIMESTAMP")
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(c => c.UpdatedDate)
+                .IsRequired(false)
+                .HasColumnType("datetime");
             entity.Property(c => c.Number).IsRequired().HasMaxLength(50);
             entity.HasIndex(c => c.Number).IsUnique();
             entity.Property(c => c.Type).IsRequired().HasMaxLength(50);
@@ -173,7 +185,9 @@ public class LearningCenterContext(DbContextOptions options) : DbContext(options
             entity.Property(c => c.RegisteredObjectId).IsRequired(false);
             entity.Property(c => c.UserId).IsRequired();
             entity.Property(c => c.Rating).IsRequired(false);
-            entity.Property(c => c.IncidentDate).IsRequired();
+            entity.Property(c => c.IncidentDate)
+                .IsRequired()
+                .HasColumnType("datetime");
             entity.HasMany(c => c.Documents)
                 .WithOne(d => d.Claim)
                 .HasForeignKey(d => d.ClaimId)
@@ -187,8 +201,11 @@ public class LearningCenterContext(DbContextOptions options) : DbContext(options
             entity.Property(d => d.Id).ValueGeneratedOnAdd();
             entity.Property(d => d.CreatedDate)
                 .IsRequired()
-                .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
-            entity.Property(d => d.UpdatedDate).IsRequired(false);
+                .HasColumnType("TIMESTAMP")
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(d => d.UpdatedDate)
+                .IsRequired(false)
+                .HasColumnType("datetime");
             entity.Property(d => d.Name).IsRequired().HasMaxLength(255);
             entity.Property(d => d.ContentType).IsRequired().HasMaxLength(100);
             entity.Property(d => d.Data).IsRequired().HasColumnType("LONGTEXT");
@@ -203,14 +220,19 @@ public class LearningCenterContext(DbContextOptions options) : DbContext(options
             entity.Property(o => o.Id).ValueGeneratedOnAdd();
             entity.Property(o => o.CreatedDate)
                 .IsRequired()
-                .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
-            entity.Property(o => o.UpdatedDate).IsRequired(false);
+                .HasColumnType("TIMESTAMP")
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(o => o.UpdatedDate)
+                .IsRequired(false)
+                .HasColumnType("datetime");
             entity.Property(o => o.Tipo).IsRequired().HasMaxLength(100);
             entity.Property(o => o.Nombre).IsRequired().HasMaxLength(200);
             entity.Property(o => o.DescripcionBreve).HasMaxLength(1000);
             entity.Property(o => o.NumeroSerie).HasMaxLength(200);
             entity.Property(o => o.Foto).HasColumnType("LONGTEXT");
-            entity.Property(o => o.FechaRegistro).IsRequired();
+            entity.Property(o => o.FechaRegistro)
+                .IsRequired()
+                .HasColumnType("datetime");
             entity.Property(o => o.Precio).HasColumnType("DECIMAL(18,2)");
             entity.Property(o => o.UserId).IsRequired();
             entity.HasIndex(o => o.UserId);
@@ -224,8 +246,11 @@ public class LearningCenterContext(DbContextOptions options) : DbContext(options
     entity.Property(p => p.Id).ValueGeneratedOnAdd();
     entity.Property(p => p.CreatedDate)
         .IsRequired()
-        .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
-    entity.Property(p => p.UpdatedDate).IsRequired(false);
+        .HasColumnType("TIMESTAMP")
+        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+    entity.Property(p => p.UpdatedDate)
+        .IsRequired(false)
+        .HasColumnType("datetime");
     
     entity.Property(p => p.UserId).IsRequired();
     

@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: resicare-backend
+    runtime: docker
+    plan: free
+    region: oregon
+    healthCheckPath: /swagger/index.html
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+    dockerfilePath: ./Dockerfile
