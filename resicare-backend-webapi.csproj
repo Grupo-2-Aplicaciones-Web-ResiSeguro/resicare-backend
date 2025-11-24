@@ -18,7 +18,6 @@
     <ItemGroup>
         <Folder Include="Contexts\Profiles\Domain\Exceptions\" />
         <Folder Include="Contexts\Shared\Application\" />
-        <Folder Include="Contexts\Shared\Interfaces\" />
         <Folder Include="Contexts\Teleconsultations\Domain\Model\Aggregate\" />
         <Folder Include="Contexts\Teleconsultations\Domain\Model\ValueObjects\" />
     </ItemGroup>

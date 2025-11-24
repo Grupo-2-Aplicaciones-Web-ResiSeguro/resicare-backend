@@ -1,4 +1,3 @@
-
 using learning_center_webapi.Contexts.IAM.Application.CommandServices;
 using learning_center_webapi.Contexts.IAM.Application.QueryServices;
 using learning_center_webapi.Contexts.IAM.Domain.Infraestructure;
@@ -22,12 +21,11 @@ using learning_center_webapi.Contexts.RegisteredObjects.Infraestructure;
 using learning_center_webapi.Contexts.Shared.Domain.Repositories;
 using learning_center_webapi.Contexts.Shared.Infraestructure.Persistence.Configuration;
 using learning_center_webapi.Contexts.Shared.Infraestructure.Repositories;
-
+using learning_center_webapi.Contexts.Shared.Interfaces.Middleware;
 using learning_center_webapi.Contexts.Teleconsultations.Application.CommandServices;
 using learning_center_webapi.Contexts.Teleconsultations.Application.QueryServices;
 using learning_center_webapi.Contexts.Teleconsultations.Domain.Infraestructure;
 using learning_center_webapi.Contexts.Teleconsultations.Infraestructure;
-
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -95,7 +93,6 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<AuthCommandService>();
 builder.Services.AddScoped<UserQueryService>();
 
-
 // Dependency injection Teleconsultations
 builder.Services.AddScoped<ITeleconsultationRepository, TeleconsultationRepository>();
 builder.Services.AddScoped<TeleconsultationCommandService>();
@@ -111,13 +108,16 @@ builder.Services.AddScoped<IReminderRepository, ReminderRepository>();
 builder.Services.AddScoped<ReminderCommandService>();
 builder.Services.AddScoped<ReminderQueryService>();
 
+// Dependency injection Claims
 builder.Services.AddScoped<IClaimRepository, ClaimRepository>();
 builder.Services.AddScoped<IClaimCommandService, ClaimCommandService>();
 builder.Services.AddScoped<IClaimQueryService, ClaimQueryService>();
 
+// Dependency injection RegisteredObjects
 builder.Services.AddScoped<IRegisteredObjectRepository, RegisteredObjectRepository>();
 builder.Services.AddScoped<IRegisteredObjectCommandService, RegisteredObjectCommandService>();
 builder.Services.AddScoped<IRegisteredObjectQueryService, RegisteredObjectQueryService>();
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
@@ -139,6 +139,9 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 //app.UseHttpsRedirection();
+
+// ⭐ IMPORTANTE: Usar el middleware de excepciones ANTES de otros middlewares
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Usar CORS (DEBE IR ANTES de UseAuthorization)
 app.UseCors("AllowFrontend");
