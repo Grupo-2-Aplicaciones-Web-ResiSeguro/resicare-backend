@@ -2,6 +2,7 @@
 using System.Net;
 using System.Text.Json;
 using learning_center_webapi.Contexts.Claims.Domain.Exceptions;
+using learning_center_webapi.Contexts.Teleconsultations.Domain.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -112,6 +113,76 @@ public class ExceptionHandlingMiddleware
                 {
                     ex.RegisteredObjectId
                 }
+            },
+
+            // Teleconsultations Domain Exceptions
+            TeleconsultationTimeSlotConflictException ex => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.Conflict,
+                Message = ex.Message,
+                ErrorCode = "TELECONSULTATION_TIME_SLOT_CONFLICT",
+                Details = new
+                {
+                    ex.Date,
+                    ex.Time,
+                    ex.ExistingTeleconsultationId
+                }
+            },
+
+            TeleconsultationServiceSlotLimitException ex => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.Conflict,
+                Message = ex.Message,
+                ErrorCode = "TELECONSULTATION_SERVICE_SLOT_LIMIT",
+                Details = new
+                {
+                    ex.Date,
+                    ex.Time,
+                    ex.Service,
+                    ex.CurrentCount,
+                    ex.MaxAllowed
+                }
+            },
+
+            InvalidServiceTypeException ex => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.BadRequest,
+                Message = ex.Message,
+                ErrorCode = "INVALID_SERVICE_TYPE",
+                Details = new
+                {
+                    ex.ProvidedService,
+                    ex.AllowedServices
+                }
+            },
+
+            TeleconsultationUserLimitException ex => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.BadRequest,
+                Message = ex.Message,
+                ErrorCode = "TELECONSULTATION_USER_LIMIT_EXCEEDED",
+                Details = new
+                {
+                    ex.UserId,
+                    ex.CurrentCount,
+                    ex.MaxAllowed
+                }
+            },
+
+            InvalidAppointmentDateException ex => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.BadRequest,
+                Message = ex.Message,
+                ErrorCode = "INVALID_APPOINTMENT_DATE",
+                Details = null
+            },
+
+            TeleconsultationNotFoundException ex => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.NotFound,
+                Message = ex.Message,
+                ErrorCode = "TELECONSULTATION_NOT_FOUND",
+                Details = null
             },
 
             // Generic exceptions
