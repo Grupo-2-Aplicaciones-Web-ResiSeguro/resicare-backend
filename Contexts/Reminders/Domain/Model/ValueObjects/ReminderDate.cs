@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using learning_center_webapi.Contexts.Reminders.Domain.Exceptions;
 
 namespace learning_center_webapi.Contexts.Reminders.Domain.Model.ValueObjects;
 
@@ -9,13 +10,13 @@ public record ReminderDate
     public ReminderDate(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("Date cannot be empty");
+            throw new InvalidReminderDateFormatException(value ?? string.Empty);
 
         value = value.Trim();
 
         if (!DateTime.TryParseExact(value, "yyyy-MM-dd", 
                 CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedDate))
-            throw new ArgumentException($"Invalid date format: {value}. Expected format: yyyy-MM-dd");
+            throw new InvalidReminderDateFormatException(value);
 
         Value = value;
     }

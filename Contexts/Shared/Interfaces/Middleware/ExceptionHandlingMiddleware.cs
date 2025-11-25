@@ -2,6 +2,7 @@
 using System.Net;
 using System.Text.Json;
 using learning_center_webapi.Contexts.Claims.Domain.Exceptions;
+using learning_center_webapi.Contexts.Reminders.Domain.Exceptions;
 using learning_center_webapi.Contexts.Teleconsultations.Domain.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -43,7 +44,9 @@ public class ExceptionHandlingMiddleware
 
         var errorResponse = exception switch
         {
+            // ============================================
             // Claims Domain Exceptions
+            // ============================================
             DuplicateActiveClaimException ex => new ErrorResponse
             {
                 StatusCode = (int)HttpStatusCode.Conflict,
@@ -115,7 +118,9 @@ public class ExceptionHandlingMiddleware
                 }
             },
 
+            // ============================================
             // Teleconsultations Domain Exceptions
+            // ============================================
             TeleconsultationTimeSlotConflictException ex => new ErrorResponse
             {
                 StatusCode = (int)HttpStatusCode.Conflict,
@@ -185,7 +190,98 @@ public class ExceptionHandlingMiddleware
                 Details = null
             },
 
+            // ============================================
+            // Reminders Domain Exceptions
+            // ============================================
+            ReminderNotFoundException ex => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.NotFound,
+                Message = ex.Message,
+                ErrorCode = "REMINDER_NOT_FOUND",
+                Details = new
+                {
+                    ex.ReminderId
+                }
+            },
+
+            ReminderInPastException ex => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.BadRequest,
+                Message = ex.Message,
+                ErrorCode = "REMINDER_IN_PAST",
+                Details = new
+                {
+                    AttemptedDateTime = ex.AttemptedDateTime.ToString("yyyy-MM-dd HH:mm")
+                }
+            },
+
+            InvalidReminderTitleException ex => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.BadRequest,
+                Message = ex.Message,
+                ErrorCode = "INVALID_REMINDER_TITLE",
+                Details = new
+                {
+                    ex.ProvidedTitle,
+                    ex.MinLength,
+                    ex.MaxLength
+                }
+            },
+
+            InvalidReminderDateFormatException ex => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.BadRequest,
+                Message = ex.Message,
+                ErrorCode = "INVALID_REMINDER_DATE_FORMAT",
+                Details = new
+                {
+                    ex.ProvidedDate,
+                    ex.ExpectedFormat
+                }
+            },
+
+            InvalidReminderTimeFormatException ex => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.BadRequest,
+                Message = ex.Message,
+                ErrorCode = "INVALID_REMINDER_TIME_FORMAT",
+                Details = new
+                {
+                    ex.ProvidedTime,
+                    ex.ExpectedFormat
+                }
+            },
+
+            DuplicateReminderException ex => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.Conflict,
+                Message = ex.Message,
+                ErrorCode = "DUPLICATE_REMINDER",
+                Details = new
+                {
+                    ex.UserId,
+                    ex.Title,
+                    ex.Date,
+                    ex.Time,
+                    ex.ExistingReminderId
+                }
+            },
+
+            ReminderTooFarInFutureException ex => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.BadRequest,
+                Message = ex.Message,
+                ErrorCode = "REMINDER_TOO_FAR_IN_FUTURE",
+                Details = new
+                {
+                    AttemptedDate = ex.AttemptedDate.ToString("yyyy-MM-dd"),
+                    ex.MaxDaysAllowed
+                }
+            },
+
+            // ============================================
             // Generic exceptions
+            // ============================================
             _ => new ErrorResponse
             {
                 StatusCode = (int)HttpStatusCode.InternalServerError,

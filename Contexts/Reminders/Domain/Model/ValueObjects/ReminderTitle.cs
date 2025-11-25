@@ -1,23 +1,22 @@
-﻿using System;
+﻿using learning_center_webapi.Contexts.Reminders.Domain.Exceptions;
 
 namespace learning_center_webapi.Contexts.Reminders.Domain.Model.ValueObjects;
 
 public record ReminderTitle
 {
     public string Value { get; }
+    private const int MinLength = 3;
+    private const int MaxLength = 80;
 
     public ReminderTitle(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("Reminder title cannot be empty");
+            throw new InvalidReminderTitleException(value ?? string.Empty, MinLength, MaxLength);
 
         value = value.Trim();
 
-        if (value.Length < 3)
-            throw new ArgumentException("Reminder title must be at least 3 characters");
-
-        if (value.Length > 100)
-            throw new ArgumentException("Reminder title cannot exceed 100 characters");
+        if (value.Length < MinLength || value.Length > MaxLength)
+            throw new InvalidReminderTitleException(value, MinLength, MaxLength);
 
         Value = value;
     }

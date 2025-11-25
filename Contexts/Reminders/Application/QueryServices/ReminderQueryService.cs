@@ -1,5 +1,4 @@
-﻿
-using learning_center_webapi.Contexts.Reminders.Domain.Infraestructure;
+﻿using learning_center_webapi.Contexts.Reminders.Domain.Infraestructure;
 using learning_center_webapi.Contexts.Reminders.Domain.Model.Aggregates;
 using learning_center_webapi.Contexts.Reminders.Domain.Queries;
 

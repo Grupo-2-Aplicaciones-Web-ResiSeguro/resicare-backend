@@ -1,8 +1,8 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
+using learning_center_webapi.Contexts.Reminders.Domain.Exceptions;
 
 namespace learning_center_webapi.Contexts.Reminders.Domain.Model.ValueObjects;
-
 public record ReminderTime
 {
     public string Value { get; }
@@ -10,16 +10,16 @@ public record ReminderTime
     public ReminderTime(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("Time cannot be empty");
+            throw new InvalidReminderTimeFormatException(value ?? string.Empty);
 
         value = value.Trim();
 
         if (!Regex.IsMatch(value, @"^\d{2}:\d{2}$"))
-            throw new ArgumentException($"Invalid time format: {value}. Expected format: HH:mm");
+            throw new InvalidReminderTimeFormatException(value);
 
         if (!TimeSpan.TryParseExact(value, @"hh\:mm", 
                 CultureInfo.InvariantCulture, out var parsedTime))
-            throw new ArgumentException($"Invalid time: {value}");
+            throw new InvalidReminderTimeFormatException(value);
 
         Value = value;
     }
