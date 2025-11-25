@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <!-- Schema omitido por brevedad -->
+    <data name="TimeSlotConflict" xml:space="preserve">
+    <value>Ya tienes una teleconsulta programada para {0} a las {1}</value>
+  </data>
+    <data name="ServiceSlotLimitExceeded" xml:space="preserve">
+    <value>El servicio '{0}' ha alcanzado su capacidad máxima ({1}) para {2} a las {3}</value>
+  </data>
+    <data name="InvalidServiceType" xml:space="preserve">
+    <value>El tipo de servicio '{0}' no es válido. Los servicios permitidos son: {1}</value>
+  </data>
+    <data name="UserLimitExceeded" xml:space="preserve">
+    <value>El usuario ha alcanzado el número máximo de teleconsultas activas ({0})</value>
+  </data>
+    <data name="TeleconsultationNotFound" xml:space="preserve">
+    <value>Teleconsulta con id '{0}' no encontrada</value>
+  </data>
+    <data name="InvalidAppointmentHour" xml:space="preserve">
+    <value>La hora '{0}' no está permitida. Las horas permitidas son: 9, 11, 14, 16</value>
+  </data>
+    <data name="AppointmentDateInPast" xml:space="preserve">
+    <value>La fecha de la cita '{0}' está en el pasado</value>
+  </data>
+    <data name="InvalidDateTimeCombination" xml:space="preserve">
+    <value>Fecha/hora de cita inválida: {0} a la hora {1}</value>
+  </data>
+</root>
