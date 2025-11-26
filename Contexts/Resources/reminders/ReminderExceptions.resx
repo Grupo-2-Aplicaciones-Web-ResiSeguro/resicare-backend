@@ -79,4 +79,5 @@
   <data name="ReminderTooFarInFuture" xml:space="preserve">
     <value>Cannot create reminders more than {0} days in the future</value>
   </data>
+
 </root>
