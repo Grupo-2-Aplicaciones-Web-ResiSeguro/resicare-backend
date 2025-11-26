@@ -11,12 +11,13 @@ using System;
 using System.Reflection;
 
 [assembly: System.Reflection.AssemblyCompanyAttribute("resicare-backend-webapi")]
-[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyCopyrightAttribute(" ")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a2b328e2860628b7fb5f6031a3838d2320a46a47")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eccef00dd516ff11909153aaebf8db022ec9dfe8")]
 [assembly: System.Reflection.AssemblyProductAttribute("resicare-backend-webapi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("resicare-backend-webapi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
+[assembly: System.Reflection.AssemblyCultureAttribute("es")]
 
 // Generado por la clase WriteCodeFragment de MSBuild.
 
