@@ -2,6 +2,7 @@
 using System.Net;
 using System.Text.Json;
 using learning_center_webapi.Contexts.Claims.Domain.Exceptions;
+using learning_center_webapi.Contexts.RegisteredObjects.Domain.Exceptions;
 using learning_center_webapi.Contexts.Reminders.Domain.Exceptions;
 using learning_center_webapi.Contexts.Teleconsultations.Domain.Exceptions;
 using Microsoft.AspNetCore.Http;
@@ -107,17 +108,7 @@ public class ExceptionHandlingMiddleware
                 }
             },
 
-            RegisteredObjectNotFoundException ex => new ErrorResponse
-            {
-                StatusCode = (int)HttpStatusCode.NotFound,
-                Message = ex.Message,
-                ErrorCode = "REGISTERED_OBJECT_NOT_FOUND",
-                Details = new
-                {
-                    ex.RegisteredObjectId
-                }
-            },
-
+            
             // ============================================
             // Teleconsultations Domain Exceptions
             // ============================================
@@ -276,6 +267,83 @@ public class ExceptionHandlingMiddleware
                 {
                     AttemptedDate = ex.AttemptedDate.ToString("yyyy-MM-dd"),
                     ex.MaxDaysAllowed
+                }
+            },
+
+            // ============================================
+            // RegisteredObjects Domain Exceptions
+            // ============================================
+            learning_center_webapi.Contexts.RegisteredObjects.Domain.Exceptions.RegisteredObjectNotFoundException ex => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.NotFound,
+                Message = ex.Message,
+                ErrorCode = "REGISTERED_OBJECT_NOT_FOUND",
+                Details = new
+                {
+                    ex.ObjectId
+                }
+            },
+
+            InvalidObjectNameException ex => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.BadRequest,
+                Message = ex.Message,
+                ErrorCode = "INVALID_OBJECT_NAME",
+                Details = new
+                {
+                    ex.ProvidedName,
+                    ex.MinLength,
+                    ex.MaxLength
+                }
+            },
+
+            InvalidObjectTypeException ex => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.BadRequest,
+                Message = ex.Message,
+                ErrorCode = "INVALID_OBJECT_TYPE",
+                Details = new
+                {
+                    ex.ProvidedType,
+                    ex.AllowedTypes
+                }
+            },
+
+            InvalidObjectPriceException ex => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.BadRequest,
+                Message = ex.Message,
+                ErrorCode = "INVALID_OBJECT_PRICE",
+                Details = new
+                {
+                    ex.ProvidedPrice,
+                    MinPrice = ex.MinPrice.ToString("C"),
+                    MaxPrice = ex.MaxPrice.ToString("C")
+                }
+            },
+
+            DuplicateSerialNumberException ex => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.Conflict,
+                Message = ex.Message,
+                ErrorCode = "DUPLICATE_SERIAL_NUMBER",
+                Details = new
+                {
+                    ex.SerialNumber,
+                    ex.UserId,
+                    ex.ExistingObjectId
+                }
+            },
+
+            CannotModifyObjectWithActiveClaimException ex => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.BadRequest,
+                Message = ex.Message,
+                ErrorCode = "CANNOT_MODIFY_OBJECT_WITH_ACTIVE_CLAIM",
+                Details = new
+                {
+                    ex.ObjectId,
+                    ex.ActiveClaimId
                 }
             },
 
