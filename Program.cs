@@ -1,11 +1,15 @@
 using learning_center_webapi.Contexts.IAM.Application.CommandServices;
 using learning_center_webapi.Contexts.IAM.Application.QueryServices;
+using learning_center_webapi.Contexts.IAM.Application.ACL;
 using learning_center_webapi.Contexts.IAM.Domain.Infraestructure;
 using learning_center_webapi.Contexts.IAM.Infraestructure;
+using learning_center_webapi.Contexts.IAM.Interfaces.REST.ACL;
 using learning_center_webapi.Contexts.Profiles.Application.CommandServices;
 using learning_center_webapi.Contexts.Profiles.Application.QueryServices;
+using learning_center_webapi.Contexts.Profiles.Application.ACL;
 using learning_center_webapi.Contexts.Profiles.Domain.Infraestructure;
 using learning_center_webapi.Contexts.Profiles.Infraestructure;
+using learning_center_webapi.Contexts.Profiles.Interfaces.REST.ACL;
 using learning_center_webapi.Contexts.Reminders.Application.CommandServices;
 using learning_center_webapi.Contexts.Reminders.Application.QueryServices;
 using learning_center_webapi.Contexts.Reminders.Domain.Infraestructure;
@@ -16,8 +20,10 @@ using learning_center_webapi.Contexts.Claims.Domain.Repositories;
 using learning_center_webapi.Contexts.Claims.Infraestructure;
 using learning_center_webapi.Contexts.RegisteredObjects.Application.CommandServices;
 using learning_center_webapi.Contexts.RegisteredObjects.Application.QueryServices;
+using learning_center_webapi.Contexts.RegisteredObjects.Application.ACL;
 using learning_center_webapi.Contexts.RegisteredObjects.Domain.Repositories;
 using learning_center_webapi.Contexts.RegisteredObjects.Infraestructure;
+using learning_center_webapi.Contexts.RegisteredObjects.Interfaces.REST.ACL;
 using learning_center_webapi.Contexts.Shared.Domain.Repositories;
 using learning_center_webapi.Contexts.Shared.Infraestructure.Persistence.Configuration;
 using learning_center_webapi.Contexts.Shared.Infraestructure.Repositories;
@@ -92,6 +98,11 @@ builder.Services.AddDbContext<LearningCenterContext>(options =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<AuthCommandService>();
 builder.Services.AddScoped<UserQueryService>();
+
+// ACL Facades
+builder.Services.AddScoped<IUserFacade, UserFacade>();
+builder.Services.AddScoped<IProfileFacade, ProfileFacade>();
+builder.Services.AddScoped<IRegisteredObjectFacade, RegisteredObjectFacade>();
 
 // Dependency injection Teleconsultations
 builder.Services.AddScoped<ITeleconsultationRepository, TeleconsultationRepository>();

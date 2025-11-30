@@ -5,13 +5,19 @@ using learning_center_webapi.Contexts.Claims.Domain.Exceptions;
 using learning_center_webapi.Contexts.Claims.Domain.Model.Entities;
 using learning_center_webapi.Contexts.Claims.Domain.Repositories;
 using learning_center_webapi.Contexts.Shared.Domain.Repositories;
+using learning_center_webapi.Contexts.IAM.Interfaces.REST.ACL;
+using learning_center_webapi.Contexts.RegisteredObjects.Interfaces.REST.ACL;
 
 namespace learning_center_webapi.Contexts.Claims.Application.CommandServices;
 
 /// <summary>
 /// Service responsible for handling claim-related commands.
 /// </summary>
-public class ClaimCommandService(IClaimRepository claimRepository, IUnitOfWork unitOfWork) : IClaimCommandService
+public class ClaimCommandService(
+    IClaimRepository claimRepository,
+    IUnitOfWork unitOfWork,
+    IUserFacade userFacade,
+    IRegisteredObjectFacade registeredObjectFacade) : IClaimCommandService
 {
     private const int MaxReportingPeriodDays = 30;
     private const int MinRating = 1;
@@ -29,9 +35,23 @@ public class ClaimCommandService(IClaimRepository claimRepository, IUnitOfWork u
         // Validate incident date is within reporting period
         ValidateIncidentDate(command.IncidentDate);
 
+        // Validate user exists using ACL facade
+        var isValidUser = await userFacade.IsValidUserId(command.UserId);
+        if (!isValidUser)
+        {
+            throw new ArgumentException($"User with id {command.UserId} does not exist.");
+        }
+
         // Validate no active claim exists for the registered object
         if (command.RegisteredObjectId.HasValue)
         {
+            // Validate registered object exists using ACL facade
+            var isValidObject = await registeredObjectFacade.IsValidRegisteredObjectId(command.RegisteredObjectId.Value);
+            if (!isValidObject)
+            {
+                throw new ArgumentException($"Registered object with id {command.RegisteredObjectId.Value} does not exist.");
+            }
+
             await ValidateNoDuplicateActiveClaim(command.RegisteredObjectId.Value);
         }
 

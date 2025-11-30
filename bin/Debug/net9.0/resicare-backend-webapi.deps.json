@@ -16,6 +16,11 @@
         },
         "runtime": {
           "resicare-backend-webapi.dll": {}
+        },
+        "resources": {
+          "es/resicare-backend-webapi.resources.dll": {
+            "locale": "es"
+          }
         }
       },
       "BouncyCastle.Cryptography/2.5.1": {

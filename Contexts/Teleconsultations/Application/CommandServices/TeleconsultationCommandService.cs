@@ -5,6 +5,7 @@ using learning_center_webapi.Contexts.Teleconsultations.Domain.Commands;
 using learning_center_webapi.Contexts.Teleconsultations.Domain.Exceptions;
 using learning_center_webapi.Contexts.Teleconsultations.Domain.Infraestructure;
 using learning_center_webapi.Contexts.Teleconsultations.Domain.Model.Entities;
+using learning_center_webapi.Contexts.IAM.Interfaces.REST.ACL;
 
 namespace learning_center_webapi.Contexts.Teleconsultations.Application.CommandServices;
 
@@ -15,6 +16,7 @@ public class TeleconsultationCommandService
 {
     private readonly ITeleconsultationRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserFacade _userFacade;
 
     // Servicios válidos tal como llegan del frontend
     private static readonly Dictionary<string, string> AllowedServices = new(StringComparer.OrdinalIgnoreCase)
@@ -28,10 +30,14 @@ public class TeleconsultationCommandService
     private const int MaxActiveTeleconsultationsPerUser = 2;
     private const int MaxTeleconsultationsPerServiceSlot = 3;
 
-    public TeleconsultationCommandService(ITeleconsultationRepository repository, IUnitOfWork unitOfWork)
+    public TeleconsultationCommandService(
+        ITeleconsultationRepository repository,
+        IUnitOfWork unitOfWork,
+        IUserFacade userFacade)
     {
         _repository = repository;
         _unitOfWork = unitOfWork;
+        _userFacade = userFacade;
     }
 
     /// <summary>
@@ -46,6 +52,13 @@ public class TeleconsultationCommandService
     /// <exception cref="TeleconsultationUserLimitException">Thrown when user exceeds active teleconsultations limit.</exception>
     public async Task<Teleconsultation> Handle(CreateTeleconsultationCommand command)
     {
+        // Validate user exists using ACL facade
+        var isValidUser = await _userFacade.IsValidUserId(command.UserId);
+        if (!isValidUser)
+        {
+            throw new ArgumentException($"User with id {command.UserId} does not exist.");
+        }
+
         // Validate and normalize service type
         var normalizedService = ValidateAndNormalizeServiceType(command.Service);
 

@@ -4,6 +4,7 @@ using learning_center_webapi.Contexts.Reminders.Domain.Infraestructure;
 using learning_center_webapi.Contexts.Reminders.Domain.Model.Aggregates;
 using learning_center_webapi.Contexts.Reminders.Domain.Model.ValueObjects;
 using learning_center_webapi.Contexts.Shared.Domain.Repositories;
+using learning_center_webapi.Contexts.IAM.Interfaces.REST.ACL;
 
 namespace learning_center_webapi.Contexts.Reminders.Application.CommandServices;
 
@@ -11,12 +12,17 @@ public class ReminderCommandService
 {
     private readonly IReminderRepository _reminderRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserFacade _userFacade;
     private const int MaxDaysInFuture = 180; // 6 months
 
-    public ReminderCommandService(IReminderRepository reminderRepository, IUnitOfWork unitOfWork)
+    public ReminderCommandService(
+        IReminderRepository reminderRepository,
+        IUnitOfWork unitOfWork,
+        IUserFacade userFacade)
     {
         _reminderRepository = reminderRepository;
         _unitOfWork = unitOfWork;
+        _userFacade = userFacade;
     }
 
     /// <exception cref="InvalidReminderTitleException">title invalid</exception>
@@ -27,6 +33,13 @@ public class ReminderCommandService
     /// <exception cref="DuplicateReminderException">duplicate reminder exists</exception>
     public async Task<Reminder> Handle(CreateReminderCommand command)
     {
+        // Validate user exists using ACL facade
+        var isValidUser = await _userFacade.IsValidUserId(command.UserId);
+        if (!isValidUser)
+        {
+            throw new ArgumentException($"User with id {command.UserId} does not exist.");
+        }
+
         var title = new ReminderTitle(command.Title);
         var type = new ReminderType(command.Type);
         var date = new ReminderDate(command.Date);

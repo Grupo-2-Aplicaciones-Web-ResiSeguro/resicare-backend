@@ -7660,19 +7660,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jhect\\.nuget\\packages\\": {}
+    "C:\\Users\\jherm\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jhect\\OneDrive\\Documentos\\GitHub\\resicare-backend\\resicare-backend-webapi.csproj",
+      "projectUniqueName": "C:\\Users\\jherm\\OneDrive\\Desktop\\ResiCare\\resicare-backend\\resicare-backend-webapi.csproj",
       "projectName": "resicare-backend-webapi",
-      "projectPath": "C:\\Users\\jhect\\OneDrive\\Documentos\\GitHub\\resicare-backend\\resicare-backend-webapi.csproj",
-      "packagesPath": "C:\\Users\\jhect\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jhect\\OneDrive\\Documentos\\GitHub\\resicare-backend\\obj\\",
+      "projectPath": "C:\\Users\\jherm\\OneDrive\\Desktop\\ResiCare\\resicare-backend\\resicare-backend-webapi.csproj",
+      "packagesPath": "C:\\Users\\jherm\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jherm\\OneDrive\\Desktop\\ResiCare\\resicare-backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\jhect\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\jherm\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"

@@ -5,6 +5,7 @@ using learning_center_webapi.Contexts.Profiles.Domain.Infraestructure;
 using learning_center_webapi.Contexts.Profiles.Domain.Model.Aggregates;
 using learning_center_webapi.Contexts.Profiles.Domain.Model.ValueObjects;
 using learning_center_webapi.Contexts.Shared.Domain.Repositories;
+using learning_center_webapi.Contexts.IAM.Interfaces.REST.ACL;
 
 namespace learning_center_webapi.Contexts.Profiles.Application.CommandServices;
 
@@ -12,15 +13,27 @@ public class ProfileCommandService
 {
     private readonly IProfileRepository _profileRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserFacade _userFacade;
 
-    public ProfileCommandService(IProfileRepository profileRepository, IUnitOfWork unitOfWork)
+    public ProfileCommandService(
+        IProfileRepository profileRepository,
+        IUnitOfWork unitOfWork,
+        IUserFacade userFacade)
     {
         _profileRepository = profileRepository;
         _unitOfWork = unitOfWork;
+        _userFacade = userFacade;
     }
 
     public async Task<Profile> Handle(CreateProfileCommand command)
     {
+        // Validate user exists using ACL facade
+        var isValidUser = await _userFacade.IsValidUserId(command.UserId);
+        if (!isValidUser)
+        {
+            throw new ArgumentException($"User with id {command.UserId} does not exist.");
+        }
+
         var existing = await _profileRepository.FindByUserIdAsync(command.UserId);
         if (existing != null)
             throw new ProfileAlreadyExistsException(command.UserId);

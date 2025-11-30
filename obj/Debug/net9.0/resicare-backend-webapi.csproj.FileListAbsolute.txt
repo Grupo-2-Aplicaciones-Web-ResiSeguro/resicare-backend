@@ -496,3 +496,16 @@ C:\Users\jherm\OneDrive\Desktop\ResiCare\resicare-backend\obj\Debug\net9.0\refin
 C:\Users\jherm\OneDrive\Desktop\ResiCare\resicare-backend\obj\Debug\net9.0\resicare-backend-webapi.pdb
 C:\Users\jherm\OneDrive\Desktop\ResiCare\resicare-backend\obj\Debug\net9.0\resicare-backend-webapi.genruntimeconfig.cache
 C:\Users\jherm\OneDrive\Desktop\ResiCare\resicare-backend\obj\Debug\net9.0\ref\resicare-backend-webapi.dll
+C:\Users\jherm\OneDrive\Desktop\ResiCare\resicare-backend\bin\Debug\net9.0\appsettings.Production.json
+C:\Users\jherm\OneDrive\Desktop\ResiCare\resicare-backend\bin\Debug\net9.0\es\resicare-backend-webapi.resources.dll
+C:\Users\jherm\OneDrive\Desktop\ResiCare\resicare-backend\obj\Debug\net9.0\learning_center_webapi.Contexts.Resources.Claims.ClaimExceptions.resources
+C:\Users\jherm\OneDrive\Desktop\ResiCare\resicare-backend\obj\Debug\net9.0\learning_center_webapi.Contexts.Resources.RegisterObjects.RegisteredObjectExceptions.resources
+C:\Users\jherm\OneDrive\Desktop\ResiCare\resicare-backend\obj\Debug\net9.0\learning_center_webapi.Contexts.Resources.Reminders.ReminderExceptions.resources
+C:\Users\jherm\OneDrive\Desktop\ResiCare\resicare-backend\obj\Debug\net9.0\learning_center_webapi.Contexts.Resources.Teleconsultations.TeleconsultationExceptions.resources
+C:\Users\jherm\OneDrive\Desktop\ResiCare\resicare-backend\obj\Debug\net9.0\learning_center_webapi.Contexts.Resources.Claims.ClaimExceptions.es.resources
+C:\Users\jherm\OneDrive\Desktop\ResiCare\resicare-backend\obj\Debug\net9.0\learning_center_webapi.Contexts.Resources.RegisterObjects.RegisteredObjectExceptions.es.resources
+C:\Users\jherm\OneDrive\Desktop\ResiCare\resicare-backend\obj\Debug\net9.0\learning_center_webapi.Contexts.Resources.Reminders.ReminderExceptions.es.resources
+C:\Users\jherm\OneDrive\Desktop\ResiCare\resicare-backend\obj\Debug\net9.0\learning_center_webapi.Contexts.Resources.Teleconsultations.TeleconsultationExceptions.es.resources
+C:\Users\jherm\OneDrive\Desktop\ResiCare\resicare-backend\obj\Debug\net9.0\resicare-backend-webapi.csproj.GenerateResource.cache
+C:\Users\jherm\OneDrive\Desktop\ResiCare\resicare-backend\obj\Debug\net9.0\es\resicare-backend-webapi.resources.cs
+C:\Users\jherm\OneDrive\Desktop\ResiCare\resicare-backend\obj\Debug\net9.0\es\resicare-backend-webapi.resources.dll
