@@ -8,13 +8,21 @@ namespace learning_center_webapi.Contexts.RegisteredObjects.Application.CommandS
 
 public class RegisteredObjectCommandService(IRegisteredObjectRepository repository, IUnitOfWork unitOfWork) : IRegisteredObjectCommandService
 {
+    // Mapeo que acepta tanto inglés como español y normaliza a español para la DB
     private static readonly Dictionary<string, string> AllowedTypes = new(StringComparer.OrdinalIgnoreCase)
     {
+        // Inglés -> español
         { "Electronic", "electronico" },
         { "Suitcase", "maleta" },
         { "Books", "libros" },
         { "Supplies", "utiles" },
-        { "Others", "otros" }
+        { "Others", "otros" },
+        // Español -> español (para que también acepte directamente español)
+        { "electronico", "electronico" },
+        { "maleta", "maleta" },
+        { "libros", "libros" },
+        { "utiles", "utiles" },
+        { "otros", "otros" }
     };
 
     private const decimal MinPrice = 0.01m;

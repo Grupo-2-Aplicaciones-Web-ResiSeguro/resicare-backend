@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("resicare-backend-webapi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2f44459f91ad1c5cd4f9fed3cf730e0af882eb29")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2b957fc140baa0987b4790049ce83ad1191069c8")]
 [assembly: System.Reflection.AssemblyProductAttribute("resicare-backend-webapi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("resicare-backend-webapi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
